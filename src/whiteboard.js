@@ -95,7 +95,6 @@
         // canvasObj.onkeydown = virtualclass.wb[mid].utility.keyOperation;
         onkeydown = virtualclass.wb[mid].utility.keyOperation;
 
-        virtualclass.system.setAppDimension(mid);
         // if (typeof (Storage) !== 'undefined') {
         //   // if (localStorage.repObjs) {
         //   //   // var replayObjs = JSON.parse(localStorage.repObjs);
@@ -271,8 +270,10 @@
           virtualclass.wb[wbId].toggleDisplay(anchorNode.parentNode.id, wbId);
           virtualclass.wb[wbId].initActiveElement(`#t_font${wbId} ul`, { type: 'font', prop: 'font' });
         } else {
-          if (typeof virtualclass.wb[virtualclass.gObj.currWb] !== 'undefined' && !virtualclass.wb[virtualclass.gObj.currWb].obj.drawTextObj
-            && typeof virtualclass.wb[virtualclass.gObj.currWb].obj.drawTextObj !== 'undefined' && this.parentNode.id.indexOf('t_text') < 0) {
+          if (typeof virtualclass.wb[virtualclass.gObj.currWb] !== 'undefined'
+            && !virtualclass.wb[virtualclass.gObj.currWb].obj.drawTextObj
+            && typeof virtualclass.wb[virtualclass.gObj.currWb].obj.drawTextObj !== 'undefined'
+            && this.parentNode.id.indexOf('t_text') < 0) {
             // virtualclass.wb[virtualclass.gObj.currWb].obj.drawTextObj.finalizeTextIfAny();
             // virtualclass.vutil.removeAllTextWrapper();
             const allTextWrapper = document.querySelectorAll('.canvasWrapper .textBoxContainer');
@@ -290,6 +291,10 @@
               // virtualclass.wb[id].utility.makeActiveTool();
 
               virtualclass.wb[wbId].utility.makeActiveTool(this.parentNode.id);
+            }
+
+            if (this.parentNode.id !== `t_text${wbId}`) {
+              virtualclass.vutil.triggerFinalizeTextIfAny(wbId);
             }
           }
 
@@ -332,7 +337,6 @@
             virtualclass.wb[wbId].prvTool = this.parentNode.id;
             virtualclass.wb[wbId].prvToolInfo = obj;
           }
-
 
           const fontTool = document.querySelector(`#t_font${wbId}`);
           const strkTool = document.querySelector(`#t_strk${wbId}`);
